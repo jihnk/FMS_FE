@@ -16,4 +16,9 @@ interface FarmsType {
   houses?: HouseType[];
 }
 
-export type { ProductionType, HouseType, FarmsType };
+interface ModalDataType {
+  title: string;
+  content: { farm: string; crop: string };
+}
+
+export type { ProductionType, HouseType, FarmsType, ModalDataType };
