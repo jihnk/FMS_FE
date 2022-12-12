@@ -1,13 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
+import { useRouter } from "next/router";
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
 import { ScreenWrap, Container, Input, Button } from "components";
 import { loginState, userState } from "src/state/userState";
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
-import { useRouter } from "next/router";
-
-//TODO: Q1-1 로그인 상태 관리
-// 상태관리 라이브러리 (context, redux, recoil 등) 을 활용해서 로그인 상태를 관리하는 기능을 개발 해주세요
-// 라이브러리 사용은 자율입니다.
-// 로그인이 완료되면 /home 라우터로 이동해야합니다.
+import useInput from "src/hooks/useInput";
 
 const Login = () => {
   const router = useRouter();
@@ -17,7 +13,7 @@ const Login = () => {
   const resetLogin = useResetRecoilState(loginState);
   const resetUser = useResetRecoilState(userState);
 
-  const [inputs, setInputs] = useState({
+  const [inputs, onChangeInput] = useInput({
     id: "",
     name: "",
   });
@@ -31,14 +27,6 @@ const Login = () => {
   const onClickLogout = () => {
     resetLogin();
     resetUser();
-  };
-
-  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target;
-    setInputs({
-      ...inputs,
-      [name]: value,
-    });
   };
 
   return (

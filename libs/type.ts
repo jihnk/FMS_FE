@@ -21,4 +21,20 @@ interface ModalDataType {
   content: { farm: string; crop: string };
 }
 
-export type { ProductionType, HouseType, FarmsType, ModalDataType };
+interface InputsType {
+  [key: string]: string;
+}
+
+type UseInputType = [
+  InputsType,
+  (e: React.ChangeEvent<HTMLInputElement>) => void
+];
+
+export type {
+  ProductionType,
+  HouseType,
+  FarmsType,
+  ModalDataType,
+  InputsType,
+  UseInputType,
+};
