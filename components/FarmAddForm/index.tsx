@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import axios from "axios";
 import Modal from "@components/Modal";
 import { Input, Button } from "components";
-import useInput from "src/hooks/useInput";
+import { useInput, useModal } from "src/hooks";
 
 const FarmAddForm = () => {
   const [inputs, onChangeInput] = useInput({ farm: "", crop: "" });
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenModal, handleModal] = useModal(false);
   const [modalContent, setModalContent] = useState({
     title: "",
     content: { farm: "", crop: "" },
@@ -28,10 +28,6 @@ const FarmAddForm = () => {
       }
     }
     handleModal();
-  };
-
-  const handleModal = () => {
-    setIsOpenModal(!isOpenModal);
   };
 
   return (
