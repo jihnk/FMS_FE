@@ -30,6 +30,8 @@ type UseInputType = [
   (e: React.ChangeEvent<HTMLInputElement>) => void
 ];
 
+type UseModalType = [boolean, () => void];
+
 export type {
   ProductionType,
   HouseType,
@@ -37,4 +39,5 @@ export type {
   ModalDataType,
   InputsType,
   UseInputType,
+  UseModalType,
 };

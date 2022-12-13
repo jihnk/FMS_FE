@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
 import { ScreenWrap, Container, Input, Button } from "components";
 import { loginState, userState } from "src/state/userState";
-import useInput from "src/hooks/useInput";
+import { useInput } from "src/hooks";
 
 const Login = () => {
   const router = useRouter();
