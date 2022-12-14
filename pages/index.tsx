@@ -1,9 +1,10 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
+import Modal from "@components/Modal";
 import { ScreenWrap, Container, Input, Button } from "components";
 import { loginState, userState } from "src/state/userState";
-import { useInput } from "src/hooks";
+import { useInput, useModal } from "src/hooks";
 
 const Login = () => {
   const router = useRouter();
@@ -13,18 +14,31 @@ const Login = () => {
   const resetLogin = useResetRecoilState(loginState);
   const resetUser = useResetRecoilState(userState);
 
-  const [inputs, onChangeInput] = useInput({
+  const [inputs, onChangeInput, isValid] = useInput({
     id: "",
     name: "",
   });
+  const [isOpenModal, handleModal, modalContent, setModalContent] =
+    useModal(false);
 
-  const onClickLogin = () => {
+  const login = () => {
     setIsLogin(true);
     setUser({ userId: inputs.id, userName: inputs.name });
     router.push(`/home`);
   };
 
-  const onClickLogout = () => {
+  const onSubmit = () => {
+    if (isValid) {
+      login();
+    } else {
+      setModalContent({
+        title: "로그인 실패!",
+      });
+      handleModal();
+    }
+  };
+
+  const logout = () => {
     resetLogin();
     resetUser();
   };
@@ -35,7 +49,7 @@ const Login = () => {
         <div className="w-[90%] flex flex-col gap-2">
           <h1 className="font-bold text-xl">그린랩스 농장관리 서비스</h1>
           {isLogin ? (
-            <Button onClick={onClickLogout}>로그아웃</Button>
+            <Button onClick={logout}>로그아웃</Button>
           ) : (
             <>
               <Input
@@ -52,8 +66,11 @@ const Login = () => {
                 value={inputs.name}
                 onChange={onChangeInput}
               />
-              <Button onClick={onClickLogin}>로그인</Button>
+              <Button onClick={onSubmit}>로그인</Button>
             </>
+          )}
+          {isOpenModal && (
+            <Modal modalData={modalContent} handleClose={handleModal}></Modal>
           )}
         </div>
       </ScreenWrap>

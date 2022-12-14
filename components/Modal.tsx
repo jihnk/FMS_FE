@@ -14,10 +14,12 @@ const Modal = ({
     <Portal>
       <div className="flex flex-col gap-3">
         <h1 className="text-2xl text-center font-bold ">{title}</h1>
-        <div className="flex justify-center	gap-2 text-l">
-          <p className="text-l">{content.farm}</p>
-          <p className="text-l font-bold">{content.crop}</p>
-        </div>
+        {content && (
+          <div className="flex justify-center	gap-2 text-l">
+            <p className="text-l">{content.farm}</p>
+            <p className="text-l font-bold">{content.crop}</p>
+          </div>
+        )}
         <Button onClick={handleClose}>닫기</Button>
       </div>
     </Portal>

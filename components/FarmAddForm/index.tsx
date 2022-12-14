@@ -1,33 +1,34 @@
-import React, { useState } from "react";
+import React from "react";
 import axios from "axios";
 import Modal from "@components/Modal";
 import { Input, Button } from "components";
 import { useInput, useModal } from "src/hooks";
 
 const FarmAddForm = () => {
-  const [inputs, onChangeInput] = useInput({ farm: "", crop: "" });
-  const [isOpenModal, handleModal] = useModal(false);
-  const [modalContent, setModalContent] = useState({
-    title: "",
-    content: { farm: "", crop: "" },
-  });
+  const [inputs, onChangeInput, isValid] = useInput({ farm: "", crop: "" });
+  const [isOpenModal, handleModal, modalContent, setModalContent] =
+    useModal(false);
 
   const addFarm = async () => {
-    if (!inputs.farm || !inputs.crop) {
+    const response = await axios.post(`/api/addfarm`, inputs);
+    if (response.status === 200) {
       setModalContent({
-        title: "농장 추가 실패!",
-        content: { farm: "", crop: "" },
+        title: "농장 추가 성공!",
+        content: response.data.result,
       });
-    } else {
-      const response = await axios.post(`/api/addfarm`, inputs);
-      if (response.status === 200) {
-        setModalContent({
-          title: "농장 추가 성공!",
-          content: response.data.result,
-        });
-      }
     }
     handleModal();
+  };
+
+  const onSubmit = () => {
+    if (isValid) {
+      addFarm();
+    } else {
+      setModalContent({
+        title: "농장 추가 실패!",
+      });
+      handleModal();
+    }
   };
 
   return (
@@ -54,7 +55,7 @@ const FarmAddForm = () => {
             />
           </div>
         </div>
-        <Button onClick={addFarm}>저장</Button>
+        <Button onClick={onSubmit}>저장</Button>
       </div>
       {isOpenModal && (
         <Modal modalData={modalContent} handleClose={handleModal}></Modal>
