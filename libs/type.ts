@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 interface ProductionType {
   month: number;
   Production: number;
@@ -18,7 +20,7 @@ interface FarmsType {
 
 interface ModalDataType {
   title: string;
-  content: { farm: string; crop: string };
+  content?: { [key: string]: string };
 }
 
 interface InputsType {
@@ -27,10 +29,16 @@ interface InputsType {
 
 type UseInputType = [
   InputsType,
-  (e: React.ChangeEvent<HTMLInputElement>) => void
+  (e: React.ChangeEvent<HTMLInputElement>) => void,
+  boolean
 ];
 
-type UseModalType = [boolean, () => void];
+type UseModalType = [
+  boolean,
+  () => void,
+  ModalDataType,
+  Dispatch<SetStateAction<ModalDataType>>
+];
 
 export type {
   ProductionType,
