@@ -14,9 +14,6 @@ const Header = () => {
         <h1 className="font-bold" onClick={() => router.push("home")}>
           농장관리시스템
         </h1>
-        {/* TODO: Q1-2 로그인 상태 관리
-            - 아래 태그에 사용자 명과 아이디가 출력 되도록 해주세요
-        */}
         {isLogin ? (
           <span className="text-sm">
             {user.userName}({user.userId})
