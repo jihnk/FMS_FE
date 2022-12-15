@@ -1,17 +1,14 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import type { FarmsType } from "libs/type";
 import FarmList from "./FarmList";
+import { getProductionTotal } from "src/utils";
 
 const Farm = () => {
   const [farmList, setFarmList] = useState<FarmsType[]>([]);
   const getFarmList = async () => {
     const res = await axios.get(`/api/farm`);
     setFarmList(res.data.farms);
-  };
-
-  const getProductionTotal = (farm: FarmsType) => {
-    return farm.annualProduction.reduce((acc, cur) => acc + cur.Production, 0);
   };
 
   const houseActive = (farmId: number, houseId: number) => {
